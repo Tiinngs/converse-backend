@@ -144,12 +144,12 @@ app.get("/order", async (req, res) => {
 
 app.post("/delete", async (req, res) => {
     const { id } = req.body;
-    await prisma.orders.delete({
+    const dl = await prisma.orders.delete({
         where: {
             id
         }
     })
-    return res.json({ code:200, msg:"delete success."})
+    return res.json({ code:200, msg:"delete success.", dl })
 })
 
 // ##################################################################################################
