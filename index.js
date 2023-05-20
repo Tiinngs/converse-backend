@@ -115,6 +115,12 @@ app.post("/order", async (req, res) => {
     if (!token) return res.json({ code: 400, msg: "Please login." });
     const decode = jwt.verify(token, "shh");
     if (decode.username === "admin") return res.json({ code: 400, msg: "you are admin." });
+    const user = await prisma.address.findUnique({
+        where: {
+            usersId: decode.id
+        }
+    })
+    if (!user.address || !user.phone) return res.json({ code: 400, msg: "please fill your address." });
     await prisma.orders.create({
         data: {
             order,
