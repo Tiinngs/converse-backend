@@ -142,6 +142,18 @@ app.get("/order", async (req, res) => {
 
 // ##################################################################################################
 
+app.post("/delete", async (req, res) => {
+    const { id } = req.body;
+    await prisma.orders.delete({
+        where: {
+            id
+        }
+    })
+    return res.json({ code:200, msg:"delete success."})
+})
+
+// ##################################################################################################
+
 app.listen(process.env.PORT || 5050, () => {
     console.log("Server running");
 });
